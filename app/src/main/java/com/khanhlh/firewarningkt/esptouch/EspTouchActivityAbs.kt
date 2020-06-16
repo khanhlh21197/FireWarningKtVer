@@ -17,7 +17,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.location.LocationManagerCompat
 import com.khanhlh.firewarningkt.R
-import com.khanhlh.firewarningkt.helper.extens.openActivity
 import java.net.InetAddress
 
 abstract class EspTouchActivityAbs : AppCompatActivity() {

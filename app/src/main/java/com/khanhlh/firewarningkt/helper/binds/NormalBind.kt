@@ -6,8 +6,8 @@ import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.khanhlh.firewarning.helper.extens.setMarkdown
 import com.khanhlh.firewarningkt.R
+import com.khanhlh.firewarningkt.helper.extens.setMarkdown
 import com.khanhlh.firewarningkt.helper.utils.ImageUtil
 import com.khanhlh.firewarningkt.helper.utils.ScrimUtil
 import com.khanhlh.firewarningkt.helper.viewmodel.PagedViewModel

@@ -12,6 +12,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.widget.Toolbar
 import com.espressif.iot.esptouch.EsptouchTask
 import com.espressif.iot.esptouch.IEsptouchResult
 import com.espressif.iot.esptouch.IEsptouchTask
@@ -22,7 +23,6 @@ import com.khanhlh.firewarningkt.MyApp
 import com.khanhlh.firewarningkt.R
 import com.khanhlh.firewarningkt.helper.extens.logD
 import com.khanhlh.firewarningkt.helper.extens.openActivity
-import kotlinx.android.synthetic.main.activity_esptouch.*
 import java.lang.ref.WeakReference
 import java.util.*
 
@@ -35,6 +35,14 @@ class EspTouchActivity : EspTouchActivityAbs() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_esptouch)
+
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        setSupportActionBar(toolbar)
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        supportActionBar!!.setDisplayShowHomeEnabled(true)
+
+        title = getString(R.string.esp_touch_title)
+
         mViewModel = EspTouchViewModel()
         mViewModel.apSsidTV = findViewById(R.id.apSsidText)
         mViewModel.apBssidTV = findViewById(R.id.apBssidText)
@@ -43,7 +51,7 @@ class EspTouchActivity : EspTouchActivityAbs() {
         mViewModel.packageModeGroup = findViewById(R.id.packageModeGroup)
         mViewModel.messageView = findViewById(R.id.messageView)
         mViewModel.confirmBtn = findViewById(R.id.confirmBtn)
-        mViewModel.confirmBtn?.setOnClickListener { v -> executeEsptouch() }
+        mViewModel.confirmBtn?.setOnClickListener { executeEsptouch() }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             val permissions =
                 arrayOf(Manifest.permission.ACCESS_FINE_LOCATION)
@@ -53,9 +61,11 @@ class EspTouchActivity : EspTouchActivityAbs() {
             logD("onCreate: Broadcast= $broadcast")
             onWifiChanged()
         })
-        setSupportActionBar(toolbar)
-        val actionBar = supportActionBar
-        actionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 
     override fun onRequestPermissionsResult(
@@ -82,7 +92,7 @@ class EspTouchActivity : EspTouchActivityAbs() {
     }
 
     override val espTouchVersion: String
-        protected get() = getString(
+        get() = getString(
             R.string.esptouch1_about_version,
             IEsptouchTask.ESPTOUCH_VERSION
         )
@@ -259,6 +269,7 @@ class EspTouchActivity : EspTouchActivityAbs() {
                 .setTitle(R.string.esptouch1_configure_result_success)
                 .setItems(resultMsgList.toArray(items), null)
                 .setPositiveButton(R.string.ok) { _, _ -> activity.openActivity(MainActivity::class.java) }
+                .setNegativeButton(R.string.cancel) { _, _ -> activity.openActivity(MainActivity::class.java) }
                 .show()
             mResultDialog!!.setCanceledOnTouchOutside(false)
         }

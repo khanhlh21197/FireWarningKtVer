@@ -40,6 +40,7 @@ class MyApp : Application() {
     override fun onCreate() {
         super.onCreate()
         app = this
+        context = this
         mCacheMap = HashMap()
         mBroadcastData = MutableLiveData()
         val filter = IntentFilter(WifiManager.NETWORK_STATE_CHANGED_ACTION)
@@ -76,5 +77,9 @@ class MyApp : Application() {
 
     fun takeCache(key: String): Any? {
         return mCacheMap!!.remove(key)
+    }
+
+    companion object{
+        lateinit var context: Context
     }
 }

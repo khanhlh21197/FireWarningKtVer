@@ -3,7 +3,7 @@ package com.khanhlh.firewarningkt.di
 import android.app.Application
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.khanhlh.firewarningkt.data.remote.UserService
+import com.khanhlh.firewarningkt.data.remote.user.UserService
 import dagger.Module
 import dagger.Provides
 import okhttp3.Cache

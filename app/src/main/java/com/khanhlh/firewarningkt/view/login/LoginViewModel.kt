@@ -1,6 +1,9 @@
 package com.khanhlh.firewarningkt.view.login
 
+import android.content.res.Resources
 import androidx.lifecycle.MutableLiveData
+import com.khanhlh.firewarningkt.MyApp
+import com.khanhlh.firewarningkt.R
 import com.khanhlh.firewarningkt.data.local.model.User
 import com.khanhlh.firewarningkt.data.remote.model.CaptainEyeResponse
 import com.khanhlh.firewarningkt.data.repository.UserRepository
@@ -124,15 +127,42 @@ constructor(private val repo: UserRepository) : BaseViewModel() {
 
     fun validateLogin() {
         val validate: Single<String>
+        val a: String = Resources.getSystem().getString(R.string.address)
     }
 
     fun validateRegister(): Boolean {
-        var validEmail = emailPattern.matcher(email.get()!!).matches()
-        var validPassword = passwordPattern.matcher(password.get()!!).matches()
-        var validRepassword = rePassword.get().equals(password.get())
-        var validName = name.get()?.isNotEmpty()
-        var phoneNumber = phoneNumber.get()?.isNotEmpty()
-        var validAddress = address.get()?.isNotEmpty()
+        val validEmail = emailPattern.matcher(email.get()!!).matches()
+        val validPassword = passwordPattern.matcher(password.get()!!).matches()
+        val validRepassword = rePassword.get().equals(password.get())
+        val validName = name.get()!!.isNotEmpty()
+        val validPhoneNumber = phoneNumber.get()!!.isNotEmpty()
+        val validAddress = address.get()!!.isNotEmpty()
+
+        if (!validEmail) {
+            errorEmail.set(MyApp.context.getString(R.string.email_empty))
+            return false
+        }
+        if (!validPassword) {
+            errorPassword.set(MyApp.context.getString(R.string.password_empty))
+            return false
+        }
+        if (!validRepassword) {
+            errorRePassword.set(MyApp.context.getString(R.string.wrong_rePass))
+            return false
+        }
+        if (!validName) {
+            errorName.set(MyApp.context.getString(R.string.name_empty))
+            return false
+        }
+        if (!validPhoneNumber) {
+            errorPhoneNumber.set(MyApp.context.getString(R.string.phone_number_empty))
+            return false
+        }
+
+        if (!validAddress) {
+            errorAddress.set(MyApp.context.getString(R.string.address_empty))
+            return false
+        }
 
         return true
     }

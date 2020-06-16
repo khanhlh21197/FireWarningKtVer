@@ -8,13 +8,17 @@ package com.khanhlh.firewarningkt.constant
 
 object Constants {
 
-    val KEY_SERIALIZABLE = "serializable"
+    const val KEY_SERIALIZABLE = "serializable"
 
-    val HOST_API = "http://api.jcodecraeer.com/"
+    const val HOST_API = "http://api.jcodecraeer.com/"
 
-    val HOST_PAO = "http://jcodecraeer.com"
+    const val WHEATHER_API = "api.openweathermap.org/data/2.5/"
 
-    val BASE_URL = "https://dev.api.captaineye.com/v2/";
+    const val WHEATHER_API_KEY = "71f6a5294f66c5c8e6aa415bcb4b18bf"
+
+    const val HOST_PAO = "http://jcodecraeer.com"
+
+    const val BASE_URL = "https://dev.api.captaineye.com/v2/";
 
     const val Qualifier_SEARCH = "search"
     const val Qualifier_HOME = "home"

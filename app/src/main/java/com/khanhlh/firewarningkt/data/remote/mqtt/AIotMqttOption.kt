@@ -1,4 +1,4 @@
-package com.khanhlh.firewarningkt.data.remote
+package com.khanhlh.firewarningkt.data.remote.mqtt
 
 import java.math.BigInteger
 import javax.crypto.Mac

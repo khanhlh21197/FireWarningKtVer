@@ -1,7 +1,7 @@
 package com.khanhlh.firewarningkt.data.repository
 
 import com.khanhlh.firewarningkt.data.local.model.User
-import com.khanhlh.firewarningkt.data.remote.UserService
+import com.khanhlh.firewarningkt.data.remote.user.UserService
 import com.khanhlh.firewarningkt.data.remote.model.BaseResponse
 import com.khanhlh.firewarningkt.data.remote.model.CaptainEyeResponse
 import io.reactivex.Single
@@ -23,4 +23,5 @@ class UserRepository(
 
     fun registerCaptainEye(user: User): Single<CaptainEyeResponse> =
         userService.registerCaptainEye(user)
+
 }

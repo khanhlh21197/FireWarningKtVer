@@ -69,7 +69,7 @@ object NetUtils {
     }
 
     fun is5G(frequency: Int): Boolean {
-        return frequency > 4900 && frequency < 5900
+        return frequency in 4901..5899
     }
 
     fun getAddress(ipAddress: Int): InetAddress? {

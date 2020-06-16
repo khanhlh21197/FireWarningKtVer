@@ -97,6 +97,7 @@
     <string name="wrong_rePass">Nhập lại mật khẩu sai !</string>
     <string name="name_empty">Vui lòng nhập tên !</string>
     <string name="address_empty">Vui lòng nhập địa chỉ !</string>
+    <string name="phone_number_empty">Vui lòng nhập số điện thoại !</string>
     <string name="wrong_email">Email không tồn tại !</string>
     <string name="wrong_password">Sai mật khẩu !</string>
 
@@ -129,4 +130,5 @@
     <string name="esptouch1_configure_result_failed_port">Lỗi</string>
     <string name="esptouch1_configure_result_success">Kết nối thành công</string>
     <string name="esptouch1_configure_result_success_item">BSSID = %1$s, InetAddress = %2$s</string>
+    <string name="esp_touch_title">Kết nối Wifi</string>
 </resources>

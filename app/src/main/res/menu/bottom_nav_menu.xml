@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navigation_home"
+        android:icon="@drawable/ic_plus"
+        android:title="Home"/>
+
+    <item
+        android:id="@+id/navigation_plus"
+        android:icon="@drawable/home"
+        android:title="Plus"/>
+
+    <item
+        android:id="@+id/navigation_artists"
+        android:icon="@drawable/time"
+        android:title="Artists"/>
+
+    <item
+        android:id="@+id/navigation_settings"
+        android:icon="@drawable/settings"
+        android:title="Settings"/>
+
+</menu>

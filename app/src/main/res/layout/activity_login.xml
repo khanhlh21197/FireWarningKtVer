@@ -112,6 +112,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             app:error="@{vm.errorEmail}"
+                            app:errorEnabled="true"
+                            app:errorTextColor="@color/red"
                             app:hintTextAppearance="@style/TextAppearance.FloatLabelHint">
 
                             <com.google.android.material.textfield.TextInputEditText
@@ -159,6 +161,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             app:error="@{vm.errorPassword}"
+                            app:errorEnabled="true"
                             app:hintTextAppearance="@style/TextAppearance.FloatLabelHint"
                             app:passwordToggleEnabled="true"
                             app:passwordToggleTint="?colorControlNormal">
@@ -217,6 +220,7 @@
                                 android:layout_height="wrap_content"
                                 android:paddingTop="-10dp"
                                 app:error="@{vm.errorRePassword}"
+                                app:errorEnabled="true"
                                 app:hintTextAppearance="@style/TextAppearance.FloatLabelHint"
                                 app:passwordToggleEnabled="true"
                                 app:passwordToggleTint="?colorControlNormal">
@@ -266,6 +270,7 @@
                                 android:layout_height="wrap_content"
                                 android:paddingTop="-10dp"
                                 app:error="@{vm.errorRePassword}"
+                                app:errorEnabled="true"
                                 app:hintTextAppearance="@style/TextAppearance.FloatLabelHint">
 
                                 <com.google.android.material.textfield.TextInputEditText
@@ -313,6 +318,7 @@
                                 android:layout_height="wrap_content"
                                 android:paddingTop="-10dp"
                                 app:error="@{vm.errorPhoneNumber}"
+                                app:errorEnabled="true"
                                 app:hintTextAppearance="@style/TextAppearance.FloatLabelHint">
 
                                 <com.google.android.material.textfield.TextInputEditText
@@ -360,6 +366,7 @@
                                 android:layout_height="wrap_content"
                                 android:paddingTop="-10dp"
                                 app:error="@{vm.errorAddress}"
+                                app:errorEnabled="true"
                                 app:hintTextAppearance="@style/TextAppearance.FloatLabelHint">
 
                                 <com.google.android.material.textfield.TextInputEditText
@@ -458,7 +465,8 @@
                             android:text="@string/login"
                             android:textColor="@color/white"
                             android:textSize="18sp"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"
+                            android:visibility="@{vm.showRegister ? View.GONE : View.VISIBLE}" />
 
                         <TextView
                             android:id="@+id/btnSignUp"
@@ -477,7 +485,7 @@
                             android:textColor="@color/white"
                             android:textSize="18sp"
                             android:textStyle="bold"
-                            android:visibility="gone" />
+                            android:visibility="@{!vm.showRegister ? View.GONE : View.VISIBLE}" />
 
                         <androidx.core.widget.ContentLoadingProgressBar
                             android:id="@+id/address_looking_up"
