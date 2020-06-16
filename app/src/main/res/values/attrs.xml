@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="RecyclerView">
+        <attr name="vertical" format="boolean"/>
+
+    </declare-styleable>
+
+    <declare-styleable name="TextInputLayout">
+        <attr name="error" format="string"/>
+    </declare-styleable>
+
+    <declare-styleable name="FabTransform">
+        <attr name="fabColor" format="color" />
+        <attr name="fabIcon" format="reference" />
+    </declare-styleable>
+
+    <declare-styleable name="CircularReveal">
+        <attr name="startRadius" format="dimension" />
+        <attr name="endRadius" format="dimension" />
+        <attr name="centerOn" format="reference" />
+    </declare-styleable>
+
+    <declare-styleable name="StartAnimatable">
+        <attr name="android:src" />
+    </declare-styleable>
+
+    <declare-styleable name="CardSlider">
+        <!-- Active card offset from start of RecyclerView. Default value is 50dp. -->
+        <attr name="activeCardLeftOffset" format="dimension"/>
+        <!-- Card width. Default value is 148dp. -->
+        <attr name="cardWidth" format="dimension"/>
+        <!-- Distance between cards. Default value is 12dp. -->
+        <attr name="cardsGap" format="dimension"/>
+        <!-- ViewUpdater implementation class. If not set, DefaultViewUpdater class is used. -->
+        <attr name="viewUpdater" format="string"/>
+    </declare-styleable>
+
+
+    <declare-styleable name="CircleIndicator">
+        <attr name="ci_radius" format="dimension"/>
+        <attr name="ci_margin" format="dimension"/>
+        <attr name="ci_background" format="color|integer"/>
+        <attr name="ci_selected_background" format="color|integer"/>
+        <attr name="ci_gravity">
+            <enum name="left" value="0"/>
+            <enum name="center" value="1"/>
+            <enum name="right" value="2"/>
+        </attr>
+        <attr name="ci_mode">
+            <enum name="inside" value="0"/>
+            <enum name="outside" value="1"/>
+            <enum name="solo" value="2"/>
+        </attr>
+    </declare-styleable>
+</resources>
