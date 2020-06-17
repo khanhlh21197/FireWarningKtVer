@@ -131,4 +131,5 @@
     <string name="esptouch1_configure_result_success">Kết nối thành công</string>
     <string name="esptouch1_configure_result_success_item">BSSID = %1$s, InetAddress = %2$s</string>
     <string name="esp_touch_title">Kết nối Wifi</string>
+    <string name="title_location_permission">Quyền truy cập vị trí</string>
 </resources>

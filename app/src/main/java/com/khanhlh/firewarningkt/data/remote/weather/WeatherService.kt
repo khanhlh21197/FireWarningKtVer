@@ -1,24 +1,34 @@
 package com.khanhlh.firewarningkt.data.remote.weather
 
+import com.khanhlh.firewarningkt.data.local.model.WeatherResponse
 import com.khanhlh.firewarningkt.constant.Constants
-import com.khanhlh.firewarningkt.data.remote.user.UserService
+import io.reactivex.Single
 import okhttp3.OkHttpClient
+import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.http.GET
+import retrofit2.http.Query
 
 interface WeatherService {
     companion object {
         private val okHttpClient = OkHttpClient.Builder().build()
-        const val REGISTER_CAPTAIN_EYE = "account/register";
-        fun create(): UserService {
+        fun create(): WeatherService {
             return Retrofit.Builder()
                 .client(okHttpClient)
-                .baseUrl(Constants.WHEATHER_API)
+                .baseUrl(Constants.WEATHER_API)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build()
-                .create(UserService::class.java)
+                .create(WeatherService::class.java)
         }
     }
+
+    @GET("weather?")
+    fun getCurrentData(
+        @Query("lat") lat: String,
+        @Query("lon") long: String,
+        @Query("APPID") clientID: String = Constants.WEATHER_API_KEY
+    ): Single<Response<WeatherResponse>>
 }

@@ -82,7 +82,7 @@ class MainActivity : AppCompatActivity() {
     private fun viewFragment(fragment: Fragment, name: String) {
         val fragmentManager: FragmentManager = supportFragmentManager
         val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.nav_host_fragment, fragment)
+        fragmentTransaction.replace(R.id.container, fragment)
         // 1. Know how many fragments there are in the stack
         val count: Int = fragmentManager.backStackEntryCount
         // 2. If the fragment is **not** "home type", save it to the stack

@@ -1,11 +1,15 @@
 package com.khanhlh.firewarningkt.view.base
 
 import android.content.Context
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.annotation.RequiresApi
+import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
@@ -22,7 +26,6 @@ import com.khanhlh.firewarningkt.helper.extens.toast
  */
 
 abstract class BaseFragment<VB : ViewDataBinding> : Fragment(), Presenter {
-
     protected val mBinding by lazy {
         DataBindingUtil.inflate<VB>(
             layoutInflater,
@@ -142,6 +145,42 @@ abstract class BaseFragment<VB : ViewDataBinding> : Fragment(), Presenter {
             }
         } else default
 
+    }
+
+    protected fun hasPermission(perm: String): Boolean {
+        return PackageManager.PERMISSION_GRANTED == ActivityCompat.checkSelfPermission(
+            requireActivity(),
+            perm
+        )
+    }
+
+    protected fun hasPermissions(permList: List<String>): Boolean {
+        var bool: Boolean
+        for (item in permList) {
+            bool = PackageManager.PERMISSION_GRANTED == ActivityCompat.checkSelfPermission(
+                requireActivity(),
+                item
+            )
+            if (!bool) return false
+        }
+        return true
+    }
+
+    protected fun hasPermissions(vararg perm: String): Boolean {
+        var bool: Boolean
+        for (item in perm) {
+            bool = PackageManager.PERMISSION_GRANTED == ActivityCompat.checkSelfPermission(
+                requireActivity(),
+                item
+            )
+            if (!bool) return false
+        }
+        return true
+    }
+
+    @RequiresApi(Build.VERSION_CODES.M)
+    protected fun requestPermissions(perm: String, requestCode: Int): Unit {
+        requireActivity().requestPermissions(arrayOf(perm), requestCode)
     }
 
 }

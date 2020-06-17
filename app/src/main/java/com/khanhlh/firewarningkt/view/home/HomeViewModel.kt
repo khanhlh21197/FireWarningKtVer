@@ -1,117 +1,69 @@
 package com.khanhlh.firewarningkt.view.home
 
 import androidx.lifecycle.MutableLiveData
-import com.khanhlh.firewarningkt.data.local.model.User
-import com.khanhlh.firewarningkt.data.remote.model.CaptainEyeResponse
-import com.khanhlh.firewarningkt.data.repository.UserRepository
-import com.khanhlh.firewarningkt.helper.extens.*
+import com.khanhlh.firewarningkt.data.local.model.WeatherResponse
+import com.khanhlh.firewarningkt.data.repository.WeatherRepository
+import com.khanhlh.firewarningkt.helper.extens.init
+import com.khanhlh.firewarningkt.helper.extens.logD
+import com.khanhlh.firewarningkt.helper.extens.set
 import com.khanhlh.firewarningkt.viewmodel.BaseViewModel
-import io.reactivex.Flowable
-import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.functions.BiFunction
 import io.reactivex.schedulers.Schedulers
-import java.util.concurrent.TimeUnit
-import java.util.regex.Pattern
+import retrofit2.Response
+import java.util.*
 
 class HomeViewModel
-constructor(private val repo: UserRepository) : BaseViewModel() {
-    private val PASSWORD_PATTERN = "^[a-zA-Z0-9_]{6,16}$"
-    private val EMAIL_PATTERN =
-        "^[a-zA-Z0-9#_~!$&'()*+,;=:.\"(),:;<>@\\[\\]\\\\]+@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*$"
+constructor(private val repo: WeatherRepository) : BaseViewModel() {
+    val minTemp = MutableLiveData<String>().init("")
+    val maxTemp = MutableLiveData<String>().init("")
+    val averageTemp = MutableLiveData<String>().init("")
+    val country = MutableLiveData<String>().init("")
+    val pressure = MutableLiveData<String>().init("")
+    val humidity = MutableLiveData<String>().init("")
+    val city = MutableLiveData<String>().init("")
+    val sunrise = MutableLiveData<String>().init("")
+    val sunset = MutableLiveData<String>().init("")
 
-    private val emailPattern = Pattern.compile(EMAIL_PATTERN)
-    private val passwordPattern = Pattern.compile(PASSWORD_PATTERN)
+    fun getCurrentData(lat: String = "35", long: String = "139", clientId: String) =
+        repo.getCurrentData(lat, long, clientId)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ onGetWeatherSuccess(it) }, { onFailure(it) })
 
-    private val isBtnEnabled = MutableLiveData<Boolean>().init(false)
-    private val loginVisibility = MutableLiveData<Boolean>().init(true)
-    private val logoutVisibility = MutableLiveData<Boolean>().init(false)
-    private val showLogin = MutableLiveData<Boolean>().init(true)
-    private val showLogout = MutableLiveData<Boolean>().init(false)
-    val showRegister = MutableLiveData<Boolean>().init(false)
+    private fun onGetWeatherSuccess(response: Response<WeatherResponse>?) {
+        if (response?.body() == null) return
+        val weatherResponse = response.body()
+        val minTempF = weatherResponse!!.main!!.temp_min
+        val maxTempF = weatherResponse.main!!.temp_max
+        val humidityF = weatherResponse.main!!.humidity
+        val pressureF = weatherResponse.main!!.pressure
+        val sunriseL = weatherResponse.sys!!.sunrise
+        val sunsetL = weatherResponse.sys!!.sunset
+        val sunriseDate = Date(sunriseL.times(1000))
+        val sunsetDate = Date(sunsetL.times(1000))
 
-    val email = MutableLiveData<String>().init("")
-    val password = MutableLiveData<String>().init("")
-    val rePassword = MutableLiveData<String>().init("")
-    val name = MutableLiveData<String>().init("")
-    val address = MutableLiveData<String>().init("")
-
-
-    init {
-        Flowable.combineLatest(
-            password.toFlowable<String>(),
-            email.toFlowable<String>(),
-            BiFunction<String, String, Boolean> { t1, t2 ->
-                return@BiFunction !(!emailPattern.matcher(t2).matches()
-                        || !passwordPattern.matcher(t1).matches())
-            }).doOnNext { isBtnEnabled.set(it) }.subscribe()
-
-        showLogin.toFlowable().doOnNext {
-            loading.set(!(showLogin.get(false) || showLogout.get(false)))
-            loginVisibility.set(showLogin.get(false))
-        }.subscribe()
-
-        showLogout.toFlowable().doOnNext {
-            loading.set(!(showLogin.get(false) || showLogout.get(false)))
-            logoutVisibility.set(showLogout.get(false))
-        }.subscribe()
+        minTemp.set(minTempF.toString())
+        maxTemp.set(maxTempF.toString())
+        averageTemp.set(average(minTempF, maxTempF).toString())
+        averageTemp.set(weatherResponse.main!!.temp_min.toString())
+        humidity.set(humidityF.toString())
+        pressure.set(pressureF.toString())
+        city.set(weatherResponse.name)
+        sunrise.set(sunriseDate.toString())
+        sunset.set(sunsetDate.toString())
     }
 
-    fun attemptToLogIn() = repo.login(email.get() ?: "", password.get() ?: "")
-        .subscribeOn(Schedulers.io())
-        .delay(1, TimeUnit.SECONDS)
-        .getOriginData()
-//        .flatMap { repo.myProfile().map { t: UserModel -> t.model } }
-        .observeOn(AndroidSchedulers.mainThread())
-        .doOnSubscribe {
-            logD(it.toString())
-            showLogin.set(false)
-            showLogout.set(false)
-        }
-        .doAfterTerminate { showLogin.set(true) }
+    private fun onFailure(error: Throwable?) {
+        logD(error.toString())
+    }
 
-//    fun attemptToLogout() = repo.logout().getOriginData().async(1000)
-//        .doOnSubscribe {
-//            showLogin.set(false)
-//            showLogout.set(false)
-//        }
-//        .doFinally { showLogout.set(true) }
+    private fun average(vararg numbers: Float): Float {
+        return sum(numbers) / numbers.size
+    }
 
-    fun attempToRegister() = repo.register(
-        email.get() ?: "",
-        password.get() ?: "",
-        name.get() ?: "",
-        address.get() ?: ""
-    ).subscribeOn(Schedulers.io())
-        .delay(1, TimeUnit.SECONDS)
-        .getOriginData()
-        .doOnSubscribe {
-            logD(it.toString())
-            showLogin.set(false)
-            showLogout.set(false)
-        }
-        .doAfterTerminate { showLogin.set(true) }
-
-    fun registerCaptainEye() =
-        repo.registerCaptainEye(User(email = email.get()!!, password = password.get()!!))
-            .subscribeOn(Schedulers.io())
-            .delay(1, TimeUnit.SECONDS)
-            .compose { upstream ->
-                upstream.flatMap { t: CaptainEyeResponse ->
-                    if (t.success.equals(true)) {
-                        return@flatMap Single.just(t)
-                    } else {
-                        return@flatMap Single.error<String>(Throwable(message = t.message))
-                    }
-                }
-            }
-            .doOnSubscribe {
-                logD(it.toString())
-                startLoad()
-                startBlur()
-            }
-            .doAfterTerminate {
-                stopLoad()
-                stopBlur()
-            }
+    private fun sum(numbers: FloatArray): Float {
+        var sum = 0f;
+        for (i in numbers) sum += i
+        return sum
+    }
 }

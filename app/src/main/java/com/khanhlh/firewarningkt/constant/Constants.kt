@@ -12,9 +12,9 @@ object Constants {
 
     const val HOST_API = "http://api.jcodecraeer.com/"
 
-    const val WHEATHER_API = "api.openweathermap.org/data/2.5/"
+    const val WEATHER_API = "http://api.openweathermap.org/data/2.5/"
 
-    const val WHEATHER_API_KEY = "71f6a5294f66c5c8e6aa415bcb4b18bf"
+    const val WEATHER_API_KEY = "71f6a5294f66c5c8e6aa415bcb4b18bf"
 
     const val HOST_PAO = "http://jcodecraeer.com"
 
