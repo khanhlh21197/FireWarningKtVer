@@ -34,8 +34,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     private val LOCATION_REQUEST = INITIAL_REQUEST + 3
 
     private lateinit var mLocationManager: LocationManager
-
     private lateinit var mViewModel: HomeViewModel
+
+    private lateinit var currentLocation: Location
 
     companion object {
         fun newInstance(): HomeFragment {
@@ -51,11 +52,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         @SuppressLint("CheckResult")
         override fun onLocationChanged(location: Location?) {
             if (location != null) {
-                mViewModel.getCurrentData(
-                    location.latitude.toString(),
-                    location.longitude.toString(),
-                    Constants.WEATHER_API_KEY
-                )
+                currentLocation = location
             }
         }
 
@@ -72,6 +69,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         }
     }
 
+    @SuppressLint("NewApi")
     @RequiresApi(Build.VERSION_CODES.M)
     override fun initView() {
         checkLocationPermission()
@@ -81,6 +79,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         mBinding.vm = mViewModel
         mLocationManager =
             requireActivity().getSystemService(LOCATION_SERVICE) as LocationManager
+        mViewModel.tick()
     }
 
     private fun onRequestFailure(it: Throwable?) {
@@ -92,7 +91,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     }
 
     override fun loadData(isRefresh: Boolean) {
-
+        mViewModel.getCurrentData(
+            currentLocation.latitude.toString(),
+            currentLocation.longitude.toString(),
+            Constants.WEATHER_API_KEY
+        )
     }
 
     override fun getLayoutId(): Int = R.layout.fragment_home

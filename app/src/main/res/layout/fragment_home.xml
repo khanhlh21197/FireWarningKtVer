@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -21,11 +22,14 @@
         android:layout_height="match_parent"
         android:fillViewport="true">
 
-        <FrameLayout
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/refresh"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:padding="25dp">
+            android:padding="25dp"
+            app:onRefresh="@{presenter}"
+            app:refreshing="@{vm.loading}">
 
             <RelativeLayout
                 android:id="@+id/mainContainer"
@@ -51,7 +55,7 @@
                         android:id="@+id/updated_at"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="20 April 2012, 20:08 PM"
+                        android:text="@{vm.currentTime}"
                         android:textSize="14sp" />
                 </LinearLayout>
 
@@ -68,7 +72,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="Clear Sky"
+                        android:text="@{vm.description}"
                         android:textSize="18sp" />
 
                     <TextView
@@ -232,7 +236,7 @@
                                 android:id="@+id/wind"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="06:40 AM"
+                                android:text="@{vm.windSpeed}"
                                 android:textSize="14sp" />
                         </LinearLayout>
                     </LinearLayout>
@@ -373,7 +377,7 @@
                 android:visibility="gone" />
 
 
-        </FrameLayout>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     </androidx.core.widget.NestedScrollView>
 

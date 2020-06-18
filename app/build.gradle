@@ -112,5 +112,8 @@ dependencies {
     implementation 'net.eusashead.mqtt:rxmqtt:1.2.0.RELEASE'
     implementation 'jp.wasabeef:glide-transformations:2.0.1'
 
+    //swipe refresh layout
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.0.0'
+
     implementation project(':esptouch')
 }

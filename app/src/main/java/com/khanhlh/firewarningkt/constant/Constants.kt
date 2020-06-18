@@ -27,4 +27,7 @@ object Constants {
     const val VIEW_NAME_TITLE = "view_name_title"
     const val DB_NAME: String = "pao.db"
 
+    const val DATE_AND_HOUR = "dd/MM/yyyy HH:mm"
+    const val JUST_HOUR = "HH : mm"
+
 }
