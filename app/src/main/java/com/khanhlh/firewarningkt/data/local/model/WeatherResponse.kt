@@ -134,3 +134,175 @@ class Coord {
     @Expose
     var lat = 0f
 }
+
+class AccuWeatherResponse {
+    @SerializedName("Headline")
+    @Expose
+    var headline: Headline? = null
+
+    @SerializedName("DailyForecasts")
+    @Expose
+    var dailyForecasts: List<DailyForecast>? = null
+
+}
+
+class DailyForecast {
+    @SerializedName("Date")
+    @Expose
+    var date: String? = null
+
+    @SerializedName("EpochDate")
+    @Expose
+    var epochDate: Int? = null
+
+    @SerializedName("Temperature")
+    @Expose
+    var temperature: Temperature? = null
+
+    @SerializedName("Day")
+    @Expose
+    var day: Day? = null
+
+    @SerializedName("Night")
+    @Expose
+    var night: Night? = null
+
+    @SerializedName("Sources")
+    @Expose
+    var sources: List<String>? = null
+
+    @SerializedName("MobileLink")
+    @Expose
+    var mobileLink: String? = null
+
+    @SerializedName("Link")
+    @Expose
+    var link: String? = null
+
+}
+
+class Day {
+    @SerializedName("Icon")
+    @Expose
+    var icon: Int? = null
+
+    @SerializedName("IconPhrase")
+    @Expose
+    var iconPhrase: String? = null
+
+    @SerializedName("HasPrecipitation")
+    @Expose
+    var hasPrecipitation: Boolean? = null
+
+    @SerializedName("PrecipitationType")
+    @Expose
+    var precipitationType: String? = null
+
+    @SerializedName("PrecipitationIntensity")
+    @Expose
+    var precipitationIntensity: String? = null
+
+}
+
+class Headline {
+    @SerializedName("EffectiveDate")
+    @Expose
+    var effectiveDate: String? = null
+
+    @SerializedName("EffectiveEpochDate")
+    @Expose
+    var effectiveEpochDate: Int? = null
+
+    @SerializedName("Severity")
+    @Expose
+    var severity: Int? = null
+
+    @SerializedName("Text")
+    @Expose
+    var text: String? = null
+
+    @SerializedName("Category")
+    @Expose
+    var category: String? = null
+
+    @SerializedName("EndDate")
+    @Expose
+    var endDate: String? = null
+
+    @SerializedName("EndEpochDate")
+    @Expose
+    var endEpochDate: Int? = null
+
+    @SerializedName("MobileLink")
+    @Expose
+    var mobileLink: String? = null
+
+    @SerializedName("Link")
+    @Expose
+    var link: String? = null
+
+}
+
+class Maximum {
+    @SerializedName("Value")
+    @Expose
+    var value: Int? = null
+
+    @SerializedName("Unit")
+    @Expose
+    var unit: String? = null
+
+    @SerializedName("UnitType")
+    @Expose
+    var unitType: Int? = null
+
+}
+
+class Minimum {
+    @SerializedName("Value")
+    @Expose
+    var value: Int? = null
+
+    @SerializedName("Unit")
+    @Expose
+    var unit: String? = null
+
+    @SerializedName("UnitType")
+    @Expose
+    var unitType: Int? = null
+
+}
+
+class Night {
+    @SerializedName("Icon")
+    @Expose
+    var icon: Int? = null
+
+    @SerializedName("IconPhrase")
+    @Expose
+    var iconPhrase: String? = null
+
+    @SerializedName("HasPrecipitation")
+    @Expose
+    var hasPrecipitation: Boolean? = null
+
+    @SerializedName("PrecipitationType")
+    @Expose
+    var precipitationType: String? = null
+
+    @SerializedName("PrecipitationIntensity")
+    @Expose
+    var precipitationIntensity: String? = null
+
+}
+
+class Temperature {
+    @SerializedName("Minimum")
+    @Expose
+    var minimum: Minimum? = null
+
+    @SerializedName("Maximum")
+    @Expose
+    var maximum: Maximum? = null
+
+}

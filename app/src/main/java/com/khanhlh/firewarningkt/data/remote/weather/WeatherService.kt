@@ -1,7 +1,7 @@
 package com.khanhlh.firewarningkt.data.remote.weather
 
-import com.khanhlh.firewarningkt.data.local.model.WeatherResponse
 import com.khanhlh.firewarningkt.constant.Constants
+import com.khanhlh.firewarningkt.data.local.model.WeatherResponse
 import io.reactivex.Single
 import okhttp3.OkHttpClient
 import retrofit2.Response
@@ -29,6 +29,7 @@ interface WeatherService {
     fun getCurrentData(
         @Query("lat") lat: String,
         @Query("lon") long: String,
-        @Query("APPID") clientID: String = Constants.WEATHER_API_KEY
+        @Query("APPID") clientID: String = Constants.WEATHER_API_KEY,
+        @Query("units") unit: String = Constants.cDegree
     ): Single<Response<WeatherResponse>>
 }

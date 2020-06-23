@@ -1,8 +1,10 @@
 package com.khanhlh.firewarningkt
 
 import android.os.Bundle
+import android.os.Handler
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -56,6 +58,8 @@ class MainActivity : AppCompatActivity() {
     private val onBottomBarClicked =
         BottomNavigationView.OnNavigationItemSelectedListener { item: MenuItem ->
             val fragment: Fragment
+            bottom_nav.visibility = View.GONE
+            Handler().postDelayed({ bottom_nav.visibility = View.VISIBLE }, 1000)
             when (item.itemId) {
                 R.id.navigation_home -> {
                     title = "Home"
@@ -82,6 +86,12 @@ class MainActivity : AppCompatActivity() {
     private fun viewFragment(fragment: Fragment, name: String) {
         val fragmentManager: FragmentManager = supportFragmentManager
         val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
+
+        fragmentTransaction.setCustomAnimations(
+            R.anim.slide_in_left, R.anim.slide_out_left,
+            R.anim.slide_out_right, R.anim.slide_in_right
+        )
+
         fragmentTransaction.replace(R.id.container, fragment)
         // 1. Know how many fragments there are in the stack
         val count: Int = fragmentManager.backStackEntryCount

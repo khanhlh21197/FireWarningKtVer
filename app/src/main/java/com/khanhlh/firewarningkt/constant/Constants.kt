@@ -16,6 +16,10 @@ object Constants {
 
     const val WEATHER_API_KEY = "71f6a5294f66c5c8e6aa415bcb4b18bf"
 
+    const val ACCU_WEATHER_API_KEY = "ZlH7UvXEO3DagMAXVEWqwxZSajA54XVY"
+
+    const val cDegree = "metric"
+
     const val HOST_PAO = "http://jcodecraeer.com"
 
     const val BASE_URL = "https://dev.api.captaineye.com/v2/";

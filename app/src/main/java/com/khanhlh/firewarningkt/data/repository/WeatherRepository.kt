@@ -9,7 +9,8 @@ class WeatherRepository(private val weatherService: WeatherService) {
     fun getCurrentData(
         lat: String,
         long: String,
-        clientId: String
+        clientId: String,
+        unit: String
     ): Single<Response<WeatherResponse>> =
-        weatherService.getCurrentData(lat, long, clientId)
+        weatherService.getCurrentData(lat, long, clientId, unit)
 }

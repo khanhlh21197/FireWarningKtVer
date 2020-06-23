@@ -14,15 +14,14 @@ import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.facebook.shimmer.ShimmerFrameLayout
 import com.khanhlh.firewarningkt.R
 import com.khanhlh.firewarningkt.constant.Constants
-import com.khanhlh.firewarningkt.data.local.model.WeatherResponse
 import com.khanhlh.firewarningkt.data.remote.weather.WeatherService
 import com.khanhlh.firewarningkt.data.repository.WeatherRepository
 import com.khanhlh.firewarningkt.databinding.FragmentHomeBinding
-import com.khanhlh.firewarningkt.helper.extens.logD
 import com.khanhlh.firewarningkt.view.base.BaseFragment
-import retrofit2.Response
+import kotlinx.android.synthetic.main.fragment_home.*
 
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>() {
@@ -36,7 +35,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     private lateinit var mLocationManager: LocationManager
     private lateinit var mViewModel: HomeViewModel
 
-    private lateinit var currentLocation: Location
+    private var currentLocation: Location = Location("Ha Dong")
 
     companion object {
         fun newInstance(): HomeFragment {
@@ -53,48 +52,45 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         override fun onLocationChanged(location: Location?) {
             if (location != null) {
                 currentLocation = location
+                loadData(true)
             }
         }
 
         override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {
-            TODO("Not yet implemented")
         }
 
         override fun onProviderEnabled(provider: String?) {
-            TODO("Not yet implemented")
+
         }
 
         override fun onProviderDisabled(provider: String?) {
-            TODO("Not yet implemented")
+
         }
     }
 
-    @SuppressLint("NewApi")
+    @SuppressLint("NewApi", "CheckResult")
     @RequiresApi(Build.VERSION_CODES.M)
     override fun initView() {
         checkLocationPermission()
+        currentLocation.longitude = 105.834160
+        currentLocation.latitude = 21.027764
         val service = WeatherService.create()
         val repo = WeatherRepository(service)
         mViewModel = HomeViewModel(repo = repo)
         mBinding.vm = mViewModel
+
         mLocationManager =
             requireActivity().getSystemService(LOCATION_SERVICE) as LocationManager
         mViewModel.tick()
-    }
-
-    private fun onRequestFailure(it: Throwable?) {
-        logD(it.toString())
-    }
-
-    private fun onRequestSuccess(it: Response<WeatherResponse>?) {
-        logD(it!!.code().toString())
+        refresh.setOnRefreshListener { loadData(true) }
     }
 
     override fun loadData(isRefresh: Boolean) {
         mViewModel.getCurrentData(
             currentLocation.latitude.toString(),
             currentLocation.longitude.toString(),
-            Constants.WEATHER_API_KEY
+            Constants.WEATHER_API_KEY,
+            Constants.cDegree
         )
     }
 
@@ -191,12 +187,16 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             )
             == PackageManager.PERMISSION_GRANTED
         ) {
-            mLocationManager.requestLocationUpdates(
-                LocationManager.NETWORK_PROVIDER,
-                0L,
-                0f,
-                mLocationListener
-            )
+            try {
+                mLocationManager.requestLocationUpdates(
+                    LocationManager.NETWORK_PROVIDER,
+                    0L,
+                    0f,
+                    mLocationListener
+                )
+            } catch (e: IllegalArgumentException) {
+                e.printStackTrace()
+            }
         }
     }
 
@@ -208,12 +208,24 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             )
             == PackageManager.PERMISSION_GRANTED
         ) {
-            mLocationManager.requestLocationUpdates(
-                LocationManager.NETWORK_PROVIDER,
-                0L,
-                0f,
-                mLocationListener
-            )
+            try {
+                mLocationManager.requestLocationUpdates(
+                    LocationManager.NETWORK_PROVIDER,
+                    0L,
+                    0f,
+                    mLocationListener
+                )
+            } catch (e: IllegalArgumentException) {
+                e.printStackTrace()
+            }
+        }
+    }
+
+    private fun ShimmerFrameLayout.handleShimmer(loading: Boolean) {
+        if (loading) {
+            startShimmer()
+        } else {
+            stopShimmer()
         }
     }
 }

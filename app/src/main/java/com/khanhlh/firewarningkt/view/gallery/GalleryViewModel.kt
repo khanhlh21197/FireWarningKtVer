@@ -1,13 +1,12 @@
 package com.khanhlh.firewarningkt.view.gallery
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import com.khanhlh.firewarningkt.helper.extens.init
+import com.khanhlh.firewarningkt.helper.extens.set
+import com.khanhlh.firewarningkt.viewmodel.BaseViewModel
 
-class GalleryViewModel : ViewModel() {
+class GalleryViewModel : BaseViewModel() {
+    var progress = MutableLiveData<String>().init("")
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is gallery Fragment"
-    }
-    val text: LiveData<String> = _text
+    fun notifyProgressChanged(progress: Int) = this.progress.set("$progress")
 }

@@ -11,6 +11,7 @@ import android.os.Build
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
+import com.khanhlh.firewarningkt.di.DaggerAppComponent
 import java.util.*
 
 class MyApp : Application() {

@@ -238,4 +238,27 @@
     <color name="google_yellow">#FBBC05</color>
     <color name="pale_grey">#e8e9ee</color>
 
+    <color name="default_thumb_color">#ff6f00</color>
+    <color name="default_track_color">#c3a9a9a9</color>
+
+    <array name="default_index_gradient">
+
+        <item>@color/green</item>
+
+        <item>@color/red</item>
+    </array>
+    <array name="default_track_gradient">
+        <item>@color/default_track_color</item>
+    </array>
+
+    <array name="progressRainbow">
+        <item>@android:color/holo_blue_light</item>
+        <item>@android:color/holo_red_light</item>
+        <item>@android:color/holo_green_light</item>
+    </array>
+
+    <array name="progressColor">
+        <item>@color/colorPrimary</item>
+    </array>
+
 </resources>

@@ -7,8 +7,8 @@ import android.view.View
  *
  * Created by ditclear on 2017/11/2.
  */
-interface Presenter:View.OnClickListener{
+interface Presenter : View.OnClickListener {
 
-    fun loadData(isRefresh:Boolean)
+    fun loadData(isRefresh: Boolean)
     override fun onClick(v: View?)
 }

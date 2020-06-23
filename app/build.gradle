@@ -17,6 +17,10 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    kapt {
+        generateStubs = true
+    }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -30,6 +34,11 @@ android {
 
     kotlinOptions {
         jvmTarget = "1.8"
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 
 }
@@ -75,7 +84,8 @@ dependencies {
 
     // apt command comes from the android-apt plugin
     implementation 'com.google.dagger:dagger:2.27'
-    compileOnly 'javax.annotation:jsr250-api:1.0'
+    kapt 'com.google.dagger:dagger-android-processor:2.27'
+    kapt 'com.google.dagger:dagger-compiler:2.27'
 
     //scan barcode
     implementation 'com.journeyapps:zxing-android-embedded:3.5.0@aar'
@@ -104,6 +114,9 @@ dependencies {
     implementation 'io.github.inflationx:viewpump:2.0.3'
     implementation "androidx.room:room-rxjava2:2.2.5"
 
+    //switch button
+    compile 'com.github.zcweng:switch-button:0.0.3@aar'
+
     // Kotlin
     def nav_version = "2.3.0-rc01"
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
@@ -114,6 +127,10 @@ dependencies {
 
     //swipe refresh layout
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.0.0'
+
+    //ssp, sdp
+    implementation 'com.intuit.ssp:ssp-android:1.0.6'
+    implementation 'com.intuit.sdp:sdp-android:1.0.6'
 
     implementation project(':esptouch')
 }
